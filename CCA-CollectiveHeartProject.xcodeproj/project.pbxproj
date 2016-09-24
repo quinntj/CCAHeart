@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8F7604341D973CDC004016FF /* prompt.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8F7604331D973CDC004016FF /* prompt.txt */; };
 		8FE74C751D95965F0041F5F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE74C741D95965F0041F5F5 /* AppDelegate.swift */; };
 		8FE74C771D95965F0041F5F5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE74C761D95965F0041F5F5 /* ViewController.swift */; };
 		8FE74C7A1D95965F0041F5F5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8FE74C781D95965F0041F5F5 /* Main.storyboard */; };
@@ -34,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8F7604331D973CDC004016FF /* prompt.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = prompt.txt; sourceTree = SOURCE_ROOT; };
 		8FE74C711D95965F0041F5F5 /* CCA-CollectiveHeartProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CCA-CollectiveHeartProject.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FE74C741D95965F0041F5F5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8FE74C761D95965F0041F5F5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 		8FE74C731D95965F0041F5F5 /* CCA-CollectiveHeartProject */ = {
 			isa = PBXGroup;
 			children = (
+				8F7604331D973CDC004016FF /* prompt.txt */,
 				8FE74C741D95965F0041F5F5 /* AppDelegate.swift */,
 				8FE74C761D95965F0041F5F5 /* ViewController.swift */,
 				8FE74C781D95965F0041F5F5 /* Main.storyboard */,
@@ -193,7 +196,7 @@
 				TargetAttributes = {
 					8FE74C701D95965F0041F5F5 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = 38EY66F389;
+						DevelopmentTeam = 2X7LLFQ4WC;
 						ProvisioningStyle = Automatic;
 					};
 					8FE74C841D95965F0041F5F5 = {
@@ -237,6 +240,7 @@
 			files = (
 				8FE74C7F1D95965F0041F5F5 /* LaunchScreen.storyboard in Resources */,
 				8FE74C7C1D95965F0041F5F5 /* Assets.xcassets in Resources */,
+				8F7604341D973CDC004016FF /* prompt.txt in Resources */,
 				8FE74C7A1D95965F0041F5F5 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -415,7 +419,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 38EY66F389;
+				DEVELOPMENT_TEAM = 2X7LLFQ4WC;
 				INFOPLIST_FILE = "CCA-CollectiveHeartProject/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Battle4heaven.CCA-CollectiveHeartProject";
@@ -428,7 +432,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 38EY66F389;
+				DEVELOPMENT_TEAM = 2X7LLFQ4WC;
 				INFOPLIST_FILE = "CCA-CollectiveHeartProject/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Battle4heaven.CCA-CollectiveHeartProject";
@@ -514,6 +518,7 @@
 				8FE74C9B1D95965F0041F5F5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8FE74C9C1D95965F0041F5F5 /* Build configuration list for PBXNativeTarget "CCA-CollectiveHeartProjectTests" */ = {
 			isa = XCConfigurationList;
@@ -522,6 +527,7 @@
 				8FE74C9E1D95965F0041F5F5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8FE74C9F1D95965F0041F5F5 /* Build configuration list for PBXNativeTarget "CCA-CollectiveHeartProjectUITests" */ = {
 			isa = XCConfigurationList;
@@ -530,6 +536,7 @@
 				8FE74CA11D95965F0041F5F5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
