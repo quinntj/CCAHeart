@@ -426,7 +426,7 @@
 				DEVELOPMENT_TEAM = 2X7LLFQ4WC;
 				INFOPLIST_FILE = "CCA-CollectiveHeartProject/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "Battle4heaven.CCA-CollectiveHeartProject";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.battle4heaven.CCA-CollectiveHeartProject";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 2;
@@ -440,7 +440,7 @@
 				DEVELOPMENT_TEAM = 2X7LLFQ4WC;
 				INFOPLIST_FILE = "CCA-CollectiveHeartProject/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "Battle4heaven.CCA-CollectiveHeartProject";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.battle4heaven.CCA-CollectiveHeartProject";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 2;
