@@ -12,6 +12,8 @@ import AVFoundation
 class ViewController: UIViewController, UITextFieldDelegate, AVAudioRecorderDelegate, AVAudioPlayerDelegate{
     // MARK: Properties
     
+
+    
     @IBOutlet weak var logoHolder: UIImageView!
     @IBOutlet weak var promptTextArea: UILabel!
     @IBOutlet weak var responseTextArea: UITextField!
@@ -19,6 +21,11 @@ class ViewController: UIViewController, UITextFieldDelegate, AVAudioRecorderDele
     @IBOutlet weak var stopButton: UIButton!
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var submitButton: UIButton!
+    @IBOutlet weak var ipadIdLabel: UILabel!
+    @IBOutlet weak var statusLabel: UILabel!
+    
+    var ipadIDPrefix = ""
+    var recordTapped = false
     
     @IBAction func submitDone(sender: AnyObject) {
         print("User clicked submit!")
@@ -35,6 +42,7 @@ class ViewController: UIViewController, UITextFieldDelegate, AVAudioRecorderDele
             stopButton.isEnabled = true
             recordButton.isEnabled = false
             audioRecorder?.record()
+            recordTapped = true
         }
     }
     
@@ -60,14 +68,14 @@ class ViewController: UIViewController, UITextFieldDelegate, AVAudioRecorderDele
             do {
                 try audioPlayer = AVAudioPlayer(contentsOf: (audioRecorder?.url)!)
             } catch {
-                print("Something went wrong! Can't play audio.")
+                statusLabel.text = "Something went wrong! Can't play audio."
             }
             
             
             audioPlayer?.delegate = self
             
             if let err = error {
-                print("audioPlayer error: \(err.localizedDescription)")
+                statusLabel.text = "audioPlayer error: \(err.localizedDescription)"
             } else {
                 audioPlayer?.play()
             }
@@ -81,7 +89,24 @@ class ViewController: UIViewController, UITextFieldDelegate, AVAudioRecorderDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        registerSettingsBundle()
+        updateDisplayFromDefaults()
         
+        let appInfo = Bundle.main.infoDictionary as! Dictionary<String,AnyObject>
+        let shortVersionString = appInfo["CFBundleShortVersionString"] as! String
+        let bundleVersion      = appInfo["CFBundleVersion"] as! String
+        let applicationVersion = shortVersionString + "." + bundleVersion
+        let defaults = UserDefaults.standard
+        defaults.set(applicationVersion, forKey: "application_version")
+        defaults.synchronize()
+        
+        statusLabel.text = ""
+        
+        NotificationCenter.default.addObserver(self,
+                                                         selector: #selector(ViewController.defaultsChanged),
+                                                         name: UserDefaults.didChangeNotification,
+                                                         object: nil)
+    
         //----copy default prompt files
         
   
@@ -145,21 +170,21 @@ class ViewController: UIViewController, UITextFieldDelegate, AVAudioRecorderDele
         do {
            try audioSession.setCategory(AVAudioSessionCategoryPlayAndRecord)
         } catch {
-            print("Something went wrong! can't setup recording.")
+            statusLabel.text = "Something went wrong! can't setup recording."
         }
         
         
         
         if let err = error {
-            print("audioSession error: \(err.localizedDescription)")
+            statusLabel.text = "audioSession error: \(err.localizedDescription)"
         }
         do {
         try audioRecorder = AVAudioRecorder(url: soundFileURL, settings: recordSettings)
         } catch {
-            print("Something went wrong! Can't Record!")
+            statusLabel.text = "Something went wrong! Can't Record!"
         }
         if let err = error {
-            print("audioSession error: \(err.localizedDescription)")
+            statusLabel.text = "audioSession error: \(err.localizedDescription)"
         } else {
             audioRecorder?.prepareToRecord()
         }
@@ -181,14 +206,14 @@ class ViewController: UIViewController, UITextFieldDelegate, AVAudioRecorderDele
     }
     
     func audioPlayerDecodeErrorDidOccur(player: AVAudioPlayer!) {
-        print("Audio Play Decode Error")
+        statusLabel.text = "Audio Play Decode Error"
     }
     
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
     }
     
     func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
-        print("Audio Record Encode Error")
+        statusLabel.text = "Audio Record Encode Error"
     }
     
     func getDocumentsDirectory() -> URL {
@@ -200,53 +225,108 @@ class ViewController: UIViewController, UITextFieldDelegate, AVAudioRecorderDele
     
     func saveThings() {
     
-        var now = NSDate()
-        var formatter = DateFormatter()
+        stopButton.isEnabled = false
+        playButton.isEnabled = false
+        recordButton.isEnabled = false
+        submitButton.isEnabled = false
+        var didwesave = ""
+        
+        let now = NSDate()
+        let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH-mm-ss"
         formatter.timeZone = NSTimeZone.local
         print(formatter.string(from: now as Date))
-        var submitDate = formatter.string(from: now as Date)
+        let submitDate = formatter.string(from: now as Date)
         
+        if recordTapped == true {
         let audioFilePath = getDocumentsDirectory().appendingPathComponent("recording.m4a")
-        let saveAudioPath = getDocumentsDirectory().appendingPathComponent("saved\(submitDate).m4a")
+        let saveAudioPath = getDocumentsDirectory().appendingPathComponent("\(ipadIDPrefix)-\(submitDate).m4a")
         let fileManager = FileManager.default
         do {
             try fileManager.copyItem(at: audioFilePath, to: saveAudioPath)
             try fileManager.removeItem(at: audioFilePath)
+            didwesave += "Recorded Truth Saved! "
+            recordTapped = false
         }
         catch let error as NSError {
-            print("Ooops! Something went wrong: \(error)")
+            statusLabel.text = "Ooops! Something went wrong: \(error)"
+
         }
-        
-        stopButton.isEnabled = false
-        playButton.isEnabled = false
+        } else {
+            let audioFilePath = getDocumentsDirectory().appendingPathComponent("recording.m4a")
+            let fileManager = FileManager.default
+            do {
+                try fileManager.removeItem(at: audioFilePath)
+            }
+            catch let error as NSError {
+                statusLabel.text = "Ooops! Something went wrong: \(error)"
+            }
+             didwesave += "No Recorded Truth. "
+           
+        }
         
         // Save data to file
         
-        let fileURL = getDocumentsDirectory().appendingPathComponent("saved\(submitDate).txt")
+        let fileURL = getDocumentsDirectory().appendingPathComponent("\(ipadIDPrefix)-\(submitDate).txt")
         print("FilePath: \(fileURL.path)")
+     
         
         let writeString = responseTextArea.text
-        do {
-            // Write to the file
-            try writeString?.write(to: fileURL, atomically: true, encoding: String.Encoding.utf8)
-        } catch let error as NSError {
-            print("Failed writing to URL: \(fileURL), Error: " + error.localizedDescription)
+        
+        if (writeString!.characters.count) > 10 {
+            do {
+                // Write to the file
+                try writeString?.write(to: fileURL, atomically: true, encoding: String.Encoding.utf8)
+                didwesave += "Typed Truth Saved! "
+            } catch let error as NSError {
+                let fileError = "Failed writing to URL: \(fileURL), Error: " + error.localizedDescription
+                statusLabel.text = fileError
+                print(fileError)
+            }
+        } else {
+            didwesave += "Typed truth must be longer than 10 charecters. "
         }
-        
- //       var readString = "" // Used to store the file contents
- //       do {
- //           // Read the file contents
- //           readString = try String(contentsOfURL: fileURL)
- //       } catch let error as NSError {
- //           print("Failed reading from URL: \(fileURL), Error: " + error.localizedDescription)
- //       }
- //       print("File Text: \(readString)")
+        statusLabel.text = didwesave
         
         
         
-        responseTextArea.text = "Tap Here to type a response"
         
+        let deadlineTime = DispatchTime.now() + .seconds(5)
+        DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
+
+            self.recordButton.isEnabled = true
+            self.submitButton.isEnabled = true
+            self.responseTextArea.text = ""
+            self.statusLabel.text = ""
+        }
     }
-    
+    func registerSettingsBundle(){
+        let appDefaults = [String:AnyObject]()
+        UserDefaults.standard.register(defaults: appDefaults)
+    }
+    func updateDisplayFromDefaults(){
+        //Get the defaults
+        let defaults = UserDefaults.standard
+        
+        //Set the controls to the default values.
+        if let ipadID = defaults.string(forKey: "ipadID"){
+            if (ipadID.characters.count >= 1 ) {
+                ipadIdLabel.text = ipadID
+                ipadIDPrefix = ipadID
+                } else {
+                ipadIdLabel.text = "ID not set"
+                ipadIdLabel.textColor = UIColor.red
+                ipadIDPrefix = "noid"
+                }
+        } else{
+            ipadIdLabel.text = "ID not available"
+            ipadIdLabel.textColor = UIColor.red
+            ipadIDPrefix = "noid"
+        }
+       
+    }
+    func defaultsChanged(){
+        updateDisplayFromDefaults()
+    }
+
 }

@@ -15,6 +15,7 @@
 		8FE74C7F1D95965F0041F5F5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8FE74C7D1D95965F0041F5F5 /* LaunchScreen.storyboard */; };
 		8FE74C8A1D95965F0041F5F5 /* CCA_CollectiveHeartProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE74C891D95965F0041F5F5 /* CCA_CollectiveHeartProjectTests.swift */; };
 		8FE74C951D95965F0041F5F5 /* CCA_CollectiveHeartProjectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE74C941D95965F0041F5F5 /* CCA_CollectiveHeartProjectUITests.swift */; };
+		E2EB72BD1D9D663800196568 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E2EB72BC1D9D663800196568 /* Settings.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		8FE74C901D95965F0041F5F5 /* CCA-CollectiveHeartProjectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "CCA-CollectiveHeartProjectUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FE74C941D95965F0041F5F5 /* CCA_CollectiveHeartProjectUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCA_CollectiveHeartProjectUITests.swift; sourceTree = "<group>"; };
 		8FE74C961D95965F0041F5F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E2EB72BC1D9D663800196568 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,7 @@
 				8F7604331D973CDC004016FF /* prompt.txt */,
 				8FE74C741D95965F0041F5F5 /* AppDelegate.swift */,
 				8FE74C761D95965F0041F5F5 /* ViewController.swift */,
+				E2EB72BC1D9D663800196568 /* Settings.bundle */,
 				8FE74C781D95965F0041F5F5 /* Main.storyboard */,
 				8FE74C7B1D95965F0041F5F5 /* Assets.xcassets */,
 				8FE74C7D1D95965F0041F5F5 /* LaunchScreen.storyboard */,
@@ -240,6 +243,7 @@
 			files = (
 				8FE74C7F1D95965F0041F5F5 /* LaunchScreen.storyboard in Resources */,
 				8FE74C7C1D95965F0041F5F5 /* Assets.xcassets in Resources */,
+				E2EB72BD1D9D663800196568 /* Settings.bundle in Resources */,
 				8F7604341D973CDC004016FF /* prompt.txt in Resources */,
 				8FE74C7A1D95965F0041F5F5 /* Main.storyboard in Resources */,
 			);
@@ -425,6 +429,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "Battle4heaven.CCA-CollectiveHeartProject";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
@@ -438,6 +443,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "Battle4heaven.CCA-CollectiveHeartProject";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};
