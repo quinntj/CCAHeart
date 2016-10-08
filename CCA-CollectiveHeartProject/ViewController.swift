@@ -35,17 +35,25 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
     @IBAction func recordAudio(sender: AnyObject) {
         if audioRecorder?.isRecording == false {
             playButton.isEnabled = false
+            playButton.alpha = 0.25
             stopButton.isEnabled = true
+            stopButton.alpha = 1
             recordButton.isEnabled = false
+            recordButton.alpha = 0.25
             audioRecorder?.record()
             recordTapped = true
+            statusLabel.text = "...Recording..."
         }
     }
     
     @IBAction func stopAudio(sender: AnyObject) {
         stopButton.isEnabled = false
+        stopButton.alpha = 0.25
         playButton.isEnabled = true
+        playButton.alpha = 1
         recordButton.isEnabled = true
+        recordButton.alpha = 1
+        statusLabel.text = ""
         
         if audioRecorder?.isRecording == true {
             audioRecorder?.stop()
@@ -57,7 +65,12 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
     @IBAction func playAudio(sender: AnyObject) {
         if audioRecorder?.isRecording == false {
             stopButton.isEnabled = true
+            stopButton.alpha = 1
             recordButton.isEnabled = false
+            recordButton.alpha = 0.25
+            playButton.isEnabled = false
+            playButton.alpha = 0.25
+            statusLabel.text = "...Playing..."
             
             var error: NSError?
             
@@ -114,15 +127,16 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         playButton.layer.cornerRadius = CGFloat(btnRadius)
         playButton.layer.borderWidth = CGFloat(bdrWidth)
         playButton.layer.borderColor = UIColor.black.cgColor
-        submitButton.layer.shadowColor = UIColor.black.cgColor
-        submitButton.layer.shadowOffset = CGSize(width: 5, height: 5)
-        submitButton.layer.shadowRadius = CGFloat(sdwRadius)
         submitButton.backgroundColor = UIColor.darkGray
         submitButton.layer.cornerRadius = CGFloat(btnRadius)
         submitButton.layer.borderWidth = CGFloat(bdrWidth)
         submitButton.layer.borderColor = UIColor.black.cgColor
         
         //done fixing buttons
+        
+        //add border to text area
+        responseTextArea.layer.borderColor = UIColor.lightGray.cgColor
+        responseTextArea.layer.borderWidth = 1
         
         let appInfo = Bundle.main.infoDictionary as! Dictionary<String,AnyObject>
         let shortVersionString = appInfo["CFBundleShortVersionString"] as! String
@@ -181,6 +195,8 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         // Setup the audio recording stuff
         playButton.isEnabled = false
         stopButton.isEnabled = false
+        playButton.alpha = 0.25
+        stopButton.alpha = 0.25
         let soundFileURL = getDocumentsDirectory().appendingPathComponent("recording.m4a")
         
         let recordSettings = [
@@ -225,6 +241,11 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         recordButton.isEnabled = true
         stopButton.isEnabled = false
+        recordButton.alpha = 1
+        stopButton.alpha = 0.25
+        playButton.isEnabled = true
+        playButton.alpha = 1
+        statusLabel.text = ""
     }
     
     func audioPlayerDecodeErrorDidOccur(player: AVAudioPlayer!) {
@@ -252,6 +273,10 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         playButton.isEnabled = false
         recordButton.isEnabled = false
         submitButton.isEnabled = false
+        stopButton.alpha = 0.25
+        playButton.alpha = 0.25
+        recordButton.alpha = 0.25
+        submitButton.alpha = 0.25
         var didwesave = ""
         
         let now = NSDate()
@@ -318,7 +343,9 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
 
             self.recordButton.isEnabled = true
+            self.recordButton.alpha = 1
             self.submitButton.isEnabled = true
+            self.submitButton.alpha = 1
             self.responseTextArea.text = ""
             self.statusLabel.text = ""
         }
